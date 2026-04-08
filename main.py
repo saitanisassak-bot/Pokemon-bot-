@@ -15,12 +15,13 @@ from pyrogram.errors import FloodWait
 import config
 import database as db
 
-# Initialize Pyrogram Client
+# Initialize Pyrogram Client with IPv6 to bypass Render network blocks
 app = Client(
     "PokemonBot",
     api_id=config.API_ID,
     api_hash=config.API_HASH,
-    bot_token=config.BOT_TOKEN
+    bot_token=config.BOT_TOKEN,
+    ipv6=True  # <--- FIX: Forces connection via IPv6
 )
 
 # --- WEB SERVER FOR RENDER (Keeps bot alive) ---
