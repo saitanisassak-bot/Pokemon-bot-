@@ -1,8 +1,9 @@
 from motor.motor_asyncio import AsyncIOMotorClient
+import certifi
 from config import MONGODB_URI
 
-# Connect to MongoDB
-client = AsyncIOMotorClient(MONGODB_URI)
+# Connect to MongoDB with SSL verification bypass fix
+client = AsyncIOMotorClient(MONGODB_URI, tlsCAFile=certifi.where())
 db = client['pokemon_bot']
 
 # Collections
@@ -69,3 +70,4 @@ async def get_all_user_ids():
     """Fetches all user IDs for broadcasting."""
     cursor = users_collection.find({}, {"_id": 1})
     return [doc["_id"] async for doc in cursor]
+
