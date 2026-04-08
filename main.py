@@ -1,4 +1,13 @@
 import asyncio
+
+# --- FIX: Explicitly create the event loop first ---
+try:
+    loop = asyncio.get_event_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+# ---------------------------------------------------
+
 from aiohttp import web
 from pyrogram import Client, filters, enums
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
@@ -149,5 +158,5 @@ async def main():
     await idle()
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
+    # We already created 'loop' at the top, so we just use it here
     loop.run_until_complete(main())
